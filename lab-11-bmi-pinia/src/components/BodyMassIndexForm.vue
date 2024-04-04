@@ -1,27 +1,15 @@
 <script setup>
 // CHILD
 
-import { ref } from 'vue'
+import { useBMIStore } from '../stores/BMIStore.js'
+import {storeToRefs} from 'pinia'
 
-const emit = defineEmits([
-  'stats-entered'
-])
+const BMIStore = useBMIStore()
 
-// reactive data to store height and weight user enters
-const weight = ref('')
-const height = ref('')
+// allow access to height and weight reactive data from the store
+const { height } = storeToRefs(BMIStore)
+const { weight } = storeToRefs(BMIStore)
 
-function calculateClicked () {
-  // validate that both height and weight were entered
-  if (weight.value === '' || height.value === '') {
-    alert('Enter a height and weight!')
-  } else {
-    // emit event to tell the Parent component that the user clicked on Calculate button
-    // include weight and height values
-    emit('stats-entered', weight.value, height.value)
-  }
-
-}
 
 </script>
 
@@ -33,14 +21,10 @@ function calculateClicked () {
 
     <!--v-model links the input values with the reactive data weight and height-->
     <label for="height-meters">Height in meters</label>
-    <input v-model="height" type="number" id="height-meters">
+    <input v-model="height" type="number">
     <br>
     <label for="weight-kilograms">Weight in kilograms</label>
-    <input v-model="weight" type="number" id="weight-kilograms">
-    <br>
-    <!--v-on click calls calculateClicked function that will emit the event and values to Parent component-->
-    <button v-on:click="calculateClicked" id="calculate-button">Calculate</button>
-
+    <input v-model="weight" type="number">
 
   </div>
 
@@ -50,11 +34,6 @@ function calculateClicked () {
 
 #bmi-form {
   background-color: darkblue;
-}
-
-#calculate-button {
-  background-color: indianred;
-  margin: 30px;
 }
 
 </style>

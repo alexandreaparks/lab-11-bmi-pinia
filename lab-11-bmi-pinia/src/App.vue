@@ -3,15 +3,13 @@
 
 import BodyMassIndexForm from './components/BodyMassIndexForm.vue'
 
-import { ref } from 'vue'
+import { useBMIStore } from './stores/BMIStore.js'
+import {storeToRefs} from 'pinia'
 
-const bmiResult = ref('')
 
-// this function is called when the Child component emits an event
-function calculateBMI(weight, height) {  // arguments come from 2 values in Child event emitted
-  const bmi = (weight / ( height * height )).toFixed(2)
-  bmiResult.value = `Your BMI is: ${bmi}`
-}
+const BMIStore = useBMIStore()
+
+const { calculatedBMI } = storeToRefs(BMIStore)
 
 </script>
 
@@ -21,10 +19,9 @@ function calculateBMI(weight, height) {  // arguments come from 2 values in Chil
 
     <h1>Body Mass Index Calculator</h1>
 
-    <!--v-on receives event emitted from Child and calls calculateBMI function-->
-    <BodyMassIndexForm v-on:stats-entered="calculateBMI"></BodyMassIndexForm>
+    <BodyMassIndexForm></BodyMassIndexForm>
 
-    <p id="bmi-result-paragraph">{{ bmiResult }}</p>
+    <p id="bmi-result-paragraph">{{ calculatedBMI }}</p>
 
   </div>
 
