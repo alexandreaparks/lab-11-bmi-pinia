@@ -1,10 +1,10 @@
 <script setup>
 // CHILD
 
-import { useBMIStore } from '../stores/BMIStore.js'
-import {storeToRefs} from 'pinia'
+import { useBMIStore } from '../stores/BMIStore.js'  // import store into component
+import {storeToRefs} from 'pinia'  // import to convert data in store to ref within this component
 
-const BMIStore = useBMIStore()
+const BMIStore = useBMIStore()  // get reference to the store
 
 // allow access to height and weight reactive data from the store
 const { height } = storeToRefs(BMIStore)
